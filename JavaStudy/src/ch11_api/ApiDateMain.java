@@ -211,6 +211,8 @@ public class ApiDateMain {
 
 		// 실행 결과
 		// 근로자의 날까지 d-day = -13
+		//.format : Date 객체를 지정된 형태의 문자열로 바꿔주는 함수
+		//.parse : 문자열(String)을 Date객체로 바꿔주는 함수
 		sdf = new SimpleDateFormat("yyyy.MM.dd");
 		Date ddate = sdf.parse(dday);
 		String today = sdf.format(dateToday);
