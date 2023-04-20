@@ -59,8 +59,8 @@ public class ApiPattern {
 		example = "637843";
 		regex = "[0-9]{6,}"; // 6자리부터 N자리까지(, 뒤에 숫자 없는경우 무한 / 있는경우 해당 숫자까지)
 		result = example.matches(regex);
-		System.out.println(result);		
-		
+		System.out.println(result);
+		System.out.println("helloworld");
 		
 	}
 }
