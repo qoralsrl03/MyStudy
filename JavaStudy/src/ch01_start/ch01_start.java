@@ -1,7 +1,7 @@
 package ch01_start;
 
 public class ch01_start {
-
+//넘어가는지 git에서 확인
 	public static void main(String[] args) {
 		// 자동완성 단축키 [ Ctrl + Space ]
 		// 코드라인 복사 [ Ctrl + Alt + 방향키 아래 ]
