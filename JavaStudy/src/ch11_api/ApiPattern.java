@@ -60,7 +60,27 @@ public class ApiPattern {
 		regex = "[0-9]{6,}"; // 6자리부터 N자리까지(, 뒤에 숫자 없는경우 무한 / 있는경우 해당 숫자까지)
 		result = example.matches(regex);
 		System.out.println(result);
-		System.out.println("helloworld");
 		
+		// 같은 숫자 3회 이상 반복 금지
+		example = "123456";
+		regex = ".*([0-9]).*\\1.*\\1.*";; 
+		result = example.matches(regex);
+		System.out.println(result);
+		
+		// 영어와 숫자로만 구성
+		example = "1q2w3e4";
+		regex = "[0-9a-zA-Z]+";
+		regex = "\\w+";
+		result = example.matches(regex);
+		System.out.println(result);
+		
+		//	영어와 숫자 + 특수문자
+		//	영어 소문자, 대문자, 숫자, 특수문자 각각 1자리 이상
+		//	8~12자리 이상 설정해주세요!
+		example = "Qwer1234!@#$";
+		//	알파벳 소문자가 1자리 이상이면 true
+		regex = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$";
+		result = example.matches(regex);
+		System.out.println(result);
 	}
 }
