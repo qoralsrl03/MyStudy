@@ -39,6 +39,7 @@ public class DateBoardMain {
 			if(mydate[i].getTime() - mydate[i+1].getTime()>0)
 			{
 				Collections.swap(dbList, i, i+1);
+				System.out.println(dbList.get(i));
 			}
 			if(i+1<50) {
 				i++;
