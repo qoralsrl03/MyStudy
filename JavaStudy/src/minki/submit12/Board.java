@@ -13,7 +13,6 @@ public class Board {
 	public Board() {}
 	
 	public Board(int no, String title, String context) {
-		super();
 		this.no = no;
 		this.title = title;
 		setUpdate(update);
