@@ -9,6 +9,7 @@ public class BoardMain {
 		Scanner scan = new Scanner(System.in);
 		BoardDB boarddb = BoardDB.getInstance();
 		
+		
 		while(isstop!=3) {
 			System.out.println("행동을 선택해 주세요");
 			System.out.println("1. 글 목록 | 2. 글 쓰기 | 3. 종료");

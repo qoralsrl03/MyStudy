@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BoardDB extends Board {
-	ArrayList<Board> boarddb = new ArrayList<>();
+	private ArrayList<Board> boarddb = new ArrayList<>();
 	Scanner scan = new Scanner(System.in);
 	String[] block = new String[2];
 
