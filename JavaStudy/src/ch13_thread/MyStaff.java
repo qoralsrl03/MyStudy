@@ -15,7 +15,6 @@ public class MyStaff extends Thread {
 	public void run() {
 		for (int i = 0; i < 5; i++) {
 			System.out.println(name + ":" + num++);
-
 			try {
 				// 현재 이 코드를 실행중인 스레드가 멈추는 것
 				// 멀티스레드 환경에서 다른 스레드는 영향 받지 않는다.
