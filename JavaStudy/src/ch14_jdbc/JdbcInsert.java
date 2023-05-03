@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 public class JdbcInsert {
 	public static void main(String[] args) {
+	
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			System.out.println("드라이버 등록 성공");
