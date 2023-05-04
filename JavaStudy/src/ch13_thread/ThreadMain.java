@@ -3,7 +3,7 @@ package ch13_thread;
 public class ThreadMain {
 	public static void main(String[] args) {
 		// 클래스 내에 있는 메소드는 사용하기 위해서 메소드에 static 선언 또는 해당 클래스의 객체 선언을 해야한다
-		ThreadMain thread = new ThreadMain();
+//		ThreadMain thread = new ThreadMain();
 //		thread.printNumber(50);
 //		thread.printNumber(10);
 

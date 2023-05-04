@@ -34,7 +34,7 @@ public class StockMain {
 					System.out.println(vo.getCustName() + " 님 환영합니다!");
 					System.out.println("\n==========================\n");}
 					// TODO 주식조회 기능 (멀티스레드) 구현
-
+					
 				} else if (select == 2) {
 					lservice.insertal();
 					// TODO 회원가입 중복 LoginService 클래스에서 id 중복 비교 구현 필요
