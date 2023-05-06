@@ -29,15 +29,32 @@ public class StockMain {
 				if (select == 1) {
 					LoginVO vo = new LoginVO();
 					vo = lservice.selectal();
-					if(vo.getCustId() != null) {
-					System.out.println("\n==========================\n");
-					System.out.println(vo.getCustName() + " 님 환영합니다!");
-					System.out.println("\n==========================\n");}
+					if (vo.getCustId() != null) {
+						System.out.println("\n==========================\n");
+						System.out.println(vo.getCustName() + " 님 환영합니다!");
+						System.out.println("\n==========================\n");
+					}
 					// TODO 주식조회 기능 (멀티스레드) 구현
-					
+					while (true) {
+						System.out.println("1. 주식창 | 2. 나의 주식 | 3. 로그아웃");
+						try {
+							select = Integer.parseInt(scan.nextLine());
+						} catch (Exception e) {
+							System.err.println("허용되지 않은 입력값입니다.");
+						}
+						if (select == 1) {
+
+						} else if (select == 2) {
+
+						} else if (select == 3) {
+							System.out.println("로그아웃 되었습니다");
+							break;
+						} else {
+							System.out.println("1~3번 사이의 값을 입력해 주세요");
+						}
+					}
 				} else if (select == 2) {
 					lservice.insertal();
-					// TODO 회원가입 중복 LoginService 클래스에서 id 중복 비교 구현 필요
 					continue outer;
 				} else if (select == 3) {
 					System.out.println("내일도 이용해주세요!");

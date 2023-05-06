@@ -13,10 +13,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-public class GetCoin2 {
+public class GetCoin2 extends Thread {
 	public static void main(String[] args) {
 		Scanner scan = new Scanner(System.in);
-		
+
 		String url = "https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo?serviceKey=0%2B3Gj89DOxwiJjsnataz9C3MPI%2Fm1kMa1xeaGWGWpK14Ty0lqIz9NHA4m1s6wSMdaK0yPsYgZSo%2FeL%2FPYbldTg%3D%3D&numOfRows=100&resultType=json";
 		try {
 			URL call_url = new URL(url);
@@ -50,20 +50,40 @@ public class GetCoin2 {
 					double[] hipr = new double[itemArray.size()];
 					double[] lopr = new double[itemArray.size()];
 
+//					System.out.printf("%-15s %15s %15s %15s %n", "주식명", "현재가격", "최고가", "최저가");
 					for (int i = 0; i < itemArray.size(); i++) {
 						JSONObject item = (JSONObject) itemArray.get(i); // 1행만 가져와서 item에 저장
 						itmsNm[i] = (String) item.get("itmsNm"); // item내의 itmsNm이라는 이름의 속성 값 호출
-						clpr[i] = Double.parseDouble((String)item.get("clpr")); 
+						clpr[i] = Double.parseDouble((String) item.get("clpr"));
 						hipr[i] = Double.parseDouble((String) item.get("hipr"));
 						lopr[i] = Double.parseDouble((String) item.get("lopr"));
-						System.out.println(itmsNm[i]);
+						if (itmsNm[i].length() >= 5) {
+							System.out.println("이름 : " + itmsNm[i] + "		| 현재가 : " + clpr[i] + "	| 최고가 : "
+									+ hipr[i] + "	| 최저가 : " + lopr[i]);
+
+						} else {
+							System.out.println("이름 : " + itmsNm[i] + "|" + "		| 현재가 : " + clpr[i]
+									+ "	| 최고가 : " + hipr[i] + "	| 최저가 : " + lopr[i]);
+						}
 					}
 					System.out.println("검색할 주식회사 이름 : ");
 					String company = scan.nextLine();
 					for (int i = 0; i < itemArray.size(); i++) {
-						if (itmsNm[i].equals(company)) {
-							System.out.println("이름 : " + itmsNm[i] + " 현재가 : " + clpr[i] + " 최고가 : " + hipr[i] + " 최저가 : " + lopr[i]);
+						if (itmsNm[i].contains(company)) {
+							if (itmsNm[i].length() >= 7) {
+								System.out.println("이름 : " +itmsNm[i] + "		| 현재가 : " + clpr[i] + "	| 최고가 : "
+										+ hipr[i] + "	| 최저가 : " + lopr[i]);
 
+							} else if(itmsNm[i].length() >= 5){
+								System.out.println("이름 : " + itmsNm[i] + "|" + "		| 현재가 : " + clpr[i]
+										+ "	| 최고가 : " + hipr[i] + "	| 최저가 : " + lopr[i]);
+							}else if(itmsNm[i].length() >= 3){
+								System.out.println("이름 : " + 		itmsNm[i] + "|" + "		| 현재가 : " + clpr[i]
+										+ "	| 최고가 : " + hipr[i] + "	| 최저가 : " + lopr[i]);
+							}else {
+								System.out.println("이름 : " + 			itmsNm[i] + "|" + "		| 현재가 : " + clpr[i]
+										+ "	| 최고가 : " + hipr[i] + "	| 최저가 : " + lopr[i]);
+							}
 						}
 					}
 				} catch (ParseException e) {
