@@ -1,15 +1,19 @@
 package minki.submitlast.main;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import minki.submitlast.service.LoginService;
+import minki.submitlast.service.StockService;
+import minki.submitlast.vo.CurrentStockVO;
 import minki.submitlast.vo.LoginVO;
 
 public class StockMain {
 
 	public static void main(String[] args) throws SQLException {
 		LoginService lservice = new LoginService();
+		StockService sservice = new StockService();
 		@SuppressWarnings("resource")
 		Scanner scan = new Scanner(System.in);
 
@@ -34,7 +38,7 @@ public class StockMain {
 						System.out.println(vo.getCustName() + " 님 환영합니다!");
 						System.out.println("\n==========================\n");
 					}
-					// TODO 주식조회 기능 (멀티스레드) 구현
+					// TODO 주식조회 기능 (멀티스레드) 구현 필요
 					while (true) {
 						System.out.println("1. 주식창 | 2. 나의 주식 | 3. 로그아웃");
 						try {
@@ -43,23 +47,29 @@ public class StockMain {
 							System.err.println("허용되지 않은 입력값입니다.");
 						}
 						if (select == 1) {
-
+							// TODO 주식조회 기능
+							ArrayList<CurrentStockVO> cvo = new ArrayList<>();
+							cvo = sservice.stockBoard();
+							for (int i = 0; i < cvo.size(); i++) {
+								System.out.println("종목 : " + cvo.get(i).getStockname() + ", 현재가 : " + cvo.get(i).getClpr()
+										+ ", 최고가 : " + cvo.get(i).getHipr() + ", 최저가 : " + cvo.get(i).getLopr());
+							}
 						} else if (select == 2) {
-
-						} else if (select == 3) {
+							// TODO 나의주식 조회 기능
+						} else if (select == 3) { // 로그아웃
 							System.out.println("로그아웃 되었습니다");
 							break;
-						} else {
+						} else { // 범위값 외 예외처리
 							System.out.println("1~3번 사이의 값을 입력해 주세요");
 						}
 					}
-				} else if (select == 2) {
+				} else if (select == 2) { // 회원가입
 					lservice.insertal();
 					continue outer;
-				} else if (select == 3) {
+				} else if (select == 3) { // 종료
 					System.out.println("내일도 이용해주세요!");
 					break;
-				} else {
+				} else { // 예외처리
 					System.out.println("잘못된 입력입니다!");
 				}
 			} catch (NumberFormatException e) {

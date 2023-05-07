@@ -15,9 +15,10 @@ public class LoginDao {
 		return instance;
 	}
 
+	// 회원가입 메소드
 	public int RegisterLogin(Connection conn, LoginVO vo) {
 		StringBuffer query = new StringBuffer();
-		query.append("	Insert Into StockDB(	  ");
+		query.append("	Insert Into CustDB(	  ");
 		query.append("	 ID							  ");
 		query.append("	,PW							  ");
 		query.append("	,Name						  ");
@@ -47,7 +48,8 @@ public class LoginDao {
 		return 0;
 
 	}
-
+	
+	// 아이디 중복 조회 메소드
 	public int scanId(Connection conn, String id) throws SQLException {
 		StringBuffer query = new StringBuffer();
 		PreparedStatement ps = null;
@@ -55,7 +57,7 @@ public class LoginDao {
 		query.append("SELECT						");
 		query.append("		id						");
 		query.append("FROM							");
-		query.append("	  stockDB				");
+		query.append("	  CustDB				");
 		query.append("Where 1=1						");
 		query.append("	  And id = ?				");
 
@@ -81,7 +83,8 @@ public class LoginDao {
 
 		return -1;
 	}
-
+	
+	// 로그인 정확한지 DB에서 조회하는 메소드
 	public LoginVO selectLogin(Connection conn, LoginVO vo) throws SQLException {
 		StringBuffer query = new StringBuffer();
 		PreparedStatement ps = null;
@@ -91,7 +94,7 @@ public class LoginDao {
 		query.append("	   ,pw						");
 		query.append("	   ,name					");
 		query.append("FROM							");
-		query.append("	  stockDB				");
+		query.append("	  CustDB				");
 		query.append("Where 1=1						");
 		query.append("	  And id = ?				");
 		query.append("	  And pw = ?				");
@@ -122,5 +125,7 @@ public class LoginDao {
 
 		return null;
 	}
+	
+	
 
 }
