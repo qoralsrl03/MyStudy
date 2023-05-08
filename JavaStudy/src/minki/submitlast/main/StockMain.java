@@ -14,7 +14,7 @@ import minki.submitlast.vo.LoginVO;
 
 public class StockMain {
 
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) throws SQLException, IndexOutOfBoundsException {
 		LoginService lservice = new LoginService();
 		StockService sservice = new StockService();
 
@@ -97,13 +97,14 @@ public class StockMain {
 								}
 								if (select == 1) {
 									System.out.println("어떤주식을 구매하시겠습니까?(번호 입력)");
+									System.out.println("현재 잔액 : " + (vo.getWallet()));
+									System.out.print(">>>");
 									try {
 										select = Integer.parseInt(scan.nextLine());
 									} catch (Exception e) {
 										System.err.println("10 이하의 숫자를 입력해주세요");
 									}
 									System.out.println(current.get(select - 1).getStockname() + " 몇 주를 구매 하시겠습니까?");
-									System.out.println("현재 잔액 : " + vo.getWallet());
 									System.out.print(">>> ");
 									int choice = Integer.parseInt(scan.nextLine());
 									if (vo.getWallet() < (choice * current.get(select - 1).getClpr())) {
@@ -111,6 +112,8 @@ public class StockMain {
 										System.out.println("-------------------------------");
 									} else {
 										System.out.println(choice + "주 구매하였습니다.");
+										vo.setWallet(vo.getWallet() - (choice * current.get(select - 1).getClpr()));
+										System.out.println("현재 잔액 : " + vo.getWallet());
 
 										// 이부분, 주식 구매시 나의 주식에 구매한 금액, 갯수, 그리고 보유하고 있던 금액에서 차감되도록
 										// 보유 금액을 차라리 먼저 생성자에 넣고 구매금액하고 갯수를 전달해서 MyStock에서 빼는 방향으로 하자
@@ -120,11 +123,12 @@ public class StockMain {
 										} else {
 											map1.put(current.get(select - 1).getStockname(), choice);
 										}
-										vo.setWallet(vo.getWallet() - (choice * current.get(select - 1).getClpr()));
 									}
 
 								} else if (select == 2) {
 									// TODO 매도 기능
+									System.out.println("2023-06-01 Comming Soon");
+									System.out.println("주식을 매도하는 기능은 현재 개발중입니다. 현재는 매도가 불가능합니다 ^^");
 								} else if (select == 3) {
 									break;
 								}
@@ -137,6 +141,7 @@ public class StockMain {
 								Integer value = entry.getValue();
 								System.out.println(key + " : " + value + "ea");
 							}
+							System.out.println("현금 보유액 : " + vo.getWallet());
 						} else if (select == 3) { // 로그아웃
 							System.out.println("로그아웃 되었습니다");
 							break;
