@@ -2,6 +2,8 @@ package minki.submitlast.main;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 import minki.submitlast.service.LoginService;
@@ -9,7 +11,6 @@ import minki.submitlast.service.RunStock;
 import minki.submitlast.service.StockService;
 import minki.submitlast.vo.CurrentStockVO;
 import minki.submitlast.vo.LoginVO;
-import minki.submitlast.vo.MyStockVO;
 
 public class StockMain {
 
@@ -19,6 +20,7 @@ public class StockMain {
 
 		RunStock rstock = new RunStock();
 		ArrayList<CurrentStockVO> cvo = sservice.stockBoard();
+		HashMap<String, Integer> map1 = new HashMap<>();
 		rstock.setCsv(cvo);
 		rstock.start();
 		@SuppressWarnings("resource")
@@ -109,21 +111,32 @@ public class StockMain {
 										System.out.println("-------------------------------");
 									} else {
 										System.out.println(choice + "주 구매하였습니다.");
-										ArrayList<MyStockVO> ams = new ArrayList<>();
-										//이부분, 주식 구매시 나의 주식에 구매한 금액, 갯수, 그리고 보유하고 있던 금액에서 차감되도록
-										//보유 금액을 차라리 먼저 생성자에 넣고 구매금액하고 갯수를 전달해서 MyStock에서 빼는 방향으로 하자
-										ams.add(new MyStockVO());
+
+										// 이부분, 주식 구매시 나의 주식에 구매한 금액, 갯수, 그리고 보유하고 있던 금액에서 차감되도록
+										// 보유 금액을 차라리 먼저 생성자에 넣고 구매금액하고 갯수를 전달해서 MyStock에서 빼는 방향으로 하자
+										if (map1.containsKey(current.get(select - 1).getStockname())) {
+											int EA = map1.get(current.get(select - 1).getStockname());
+											map1.put(current.get(select - 1).getStockname(), EA + choice);
+										} else {
+											map1.put(current.get(select - 1).getStockname(), choice);
+										}
 										vo.setWallet(vo.getWallet() - (choice * current.get(select - 1).getClpr()));
 									}
 
 								} else if (select == 2) {
-									System.out.println("2번선택");
+									// TODO 매도 기능
 								} else if (select == 3) {
 									break;
 								}
 							}
 						} else if (select == 2) {
-							// TODO 나의주식 조회 기능
+							// 나의 주식 조회
+							System.out.println("현재 보유중인 주식 --");
+							for (Entry<String, Integer> entry : map1.entrySet()) {
+								String key = entry.getKey();
+								Integer value = entry.getValue();
+								System.out.println(key + " : " + value + "ea");
+							}
 						} else if (select == 3) { // 로그아웃
 							System.out.println("로그아웃 되었습니다");
 							break;
