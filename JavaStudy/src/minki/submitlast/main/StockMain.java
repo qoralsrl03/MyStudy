@@ -72,7 +72,7 @@ public class StockMain {
 												+ String.format("%.2f", current.get(i).getLopr()));
 									} else if (current.get(i).getStockname().length() >= 6) {
 										System.out.println((i + 1) + ". 종목 : " + current.get(i).getStockname()
-												+ "\t| 현재가 : " + String.format("%.2f", current.get(i).getClpr()) + "("
+												+ "    | 현재가 : " + String.format("%.2f", current.get(i).getClpr()) + "("
 												+ percentage + ")" + " \t| 최고가 : "
 												+ String.format("%.2f", current.get(i).getHipr()) + " \t| 최저가 : "
 												+ String.format("%.2f", current.get(i).getLopr()));
@@ -96,22 +96,20 @@ public class StockMain {
 									System.out.println("어떤주식을 구매하시겠습니까?(번호 입력)");
 									try {
 										select = Integer.parseInt(scan.nextLine());
-										System.out.println(current.get(select - 1).getStockname() + "을 구매하시겠습니까?");
-										System.out.println("Y / N");
-										String answer = scan.nextLine();
-										if (answer.equalsIgnoreCase("Y")) {
-											System.out.println("몇 주를 구매 하시겠습니까?");
-											int choice = Integer.parseInt(scan.nextLine());
-											if (vo.getWallet() < (choice * current.get(select - 1).getClpr())) {
-												System.out.println("돈이 모자랍니다.");
-											} else {
-												System.out.println(choice + "주 구매하였습니다.");
-												vo.setWallet(
-														vo.getWallet() - (choice * current.get(select - 1).getClpr()));
-											}
-										}
 									} catch (Exception e) {
 										System.err.println("10 이하의 숫자를 입력해주세요");
+									}
+									System.out.println(current.get(select - 1).getStockname() + " 몇 주를 구매 하시겠습니까?");
+									System.out.println("현재 잔액 : " + vo.getWallet());
+									System.out.print(">>> ");
+									int choice = Integer.parseInt(scan.nextLine());
+									if (vo.getWallet() < (choice * current.get(select - 1).getClpr())) {
+										System.out.println("당신의 얄팍한 지갑으로는 살 수 없습니다.");
+										System.out.println("-------------------------------");
+									} else {
+										System.out.println(choice + "주 구매하였습니다.");
+										ArrayList<MyStockVO> ams = new ArrayList<>();
+										vo.setWallet(vo.getWallet() - (choice * current.get(select - 1).getClpr()));
 									}
 
 								} else if (select == 2) {
