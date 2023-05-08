@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import minki.submitlast.service.LoginService;
+import minki.submitlast.service.RunStock;
 import minki.submitlast.service.StockService;
 import minki.submitlast.vo.CurrentStockVO;
 import minki.submitlast.vo.LoginVO;
@@ -14,6 +15,11 @@ public class StockMain {
 	public static void main(String[] args) throws SQLException {
 		LoginService lservice = new LoginService();
 		StockService sservice = new StockService();
+
+		RunStock rstock = new RunStock();
+		ArrayList<CurrentStockVO> cvo = sservice.stockBoard();
+		rstock.setCsv(cvo);
+		rstock.start();
 		@SuppressWarnings("resource")
 		Scanner scan = new Scanner(System.in);
 
@@ -48,12 +54,14 @@ public class StockMain {
 						}
 						if (select == 1) {
 							// TODO 주식조회 기능
-							ArrayList<CurrentStockVO> cvo = new ArrayList<>();
-							cvo = sservice.stockBoard();
-							for (int i = 0; i < cvo.size(); i++) {
-								System.out.println("종목 : " + cvo.get(i).getStockname() + ", 현재가 : " + cvo.get(i).getClpr()
-										+ ", 최고가 : " + cvo.get(i).getHipr() + ", 최저가 : " + cvo.get(i).getLopr());
+							ArrayList<CurrentStockVO> current = rstock.getCsv();
+
+							for (int i = 0; i < current.size(); i++) {
+								System.out.println("종목 : " + current.get(i).getStockname() + ", 현재가 : "
+										+ current.get(i).getClpr() + ", 최고가 : " + current.get(i).getHipr() + ", 최저가 : "
+										+ current.get(i).getLopr());
 							}
+
 						} else if (select == 2) {
 							// TODO 나의주식 조회 기능
 						} else if (select == 3) { // 로그아웃
