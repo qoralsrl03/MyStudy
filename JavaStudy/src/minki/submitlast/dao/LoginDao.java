@@ -22,8 +22,10 @@ public class LoginDao {
 		query.append("	 ID							  ");
 		query.append("	,PW							  ");
 		query.append("	,Name						  ");
+		query.append("	,Wallet					  ");
 		query.append("	)VALUES(					  ");
 		query.append("	?							  ");
+		query.append("	,?							  ");
 		query.append("	,?							  ");
 		query.append("	,?)							  ");
 
@@ -35,6 +37,7 @@ public class LoginDao {
 			ps.setString(idx++, vo.getCustId());
 			ps.setString(idx++, vo.getCustPw());
 			ps.setString(idx++, vo.getCustName());
+			ps.setDouble(idx++, vo.getWallet());
 			int count = ps.executeUpdate();
 			System.out.println(count + "줄이 삽입되었습니다.");
 			ps.close();
@@ -48,7 +51,7 @@ public class LoginDao {
 		return 0;
 
 	}
-	
+
 	// 아이디 중복 조회 메소드
 	public int scanId(Connection conn, String id) throws SQLException {
 		StringBuffer query = new StringBuffer();
@@ -83,7 +86,7 @@ public class LoginDao {
 
 		return -1;
 	}
-	
+
 	// 로그인 정확한지 DB에서 조회하는 메소드
 	public LoginVO selectLogin(Connection conn, LoginVO vo) throws SQLException {
 		StringBuffer query = new StringBuffer();
@@ -93,6 +96,7 @@ public class LoginDao {
 		query.append("		id						");
 		query.append("	   ,pw						");
 		query.append("	   ,name					");
+		query.append("	   ,wallet				");
 		query.append("FROM							");
 		query.append("	  CustDB				");
 		query.append("Where 1=1						");
@@ -111,6 +115,7 @@ public class LoginDao {
 				login.setCustId(rs.getString("id"));
 				login.setCustPw(rs.getString("pw"));
 				login.setCustName(rs.getString("name"));
+				login.setWallet(rs.getDouble("wallet"));
 			}
 
 			return login;
@@ -125,7 +130,28 @@ public class LoginDao {
 
 		return null;
 	}
-	
-	
+
+	public void DeleteID(Connection conn, String ID) {
+		StringBuffer query = new StringBuffer();
+		PreparedStatement ps = null;
+		query.append("	Delete FROM  CustDB 	  ");
+		query.append("	Where 1=1					  ");
+		query.append("	And ID = 	?				  ");
+
+		try {
+			ps = conn.prepareStatement(query.toString());
+
+			int idx = 1;
+
+			ps.setString(idx++, ID);
+			int count = ps.executeUpdate();
+			System.out.println(count + "줄이 삭제되었습니다.");
+			ps.close();
+		} catch (SQLException e) {
+			System.err.println("Error message: " + e.getMessage());
+			System.err.println("SQL state: " + e.getSQLState());
+		}
+
+	}
 
 }

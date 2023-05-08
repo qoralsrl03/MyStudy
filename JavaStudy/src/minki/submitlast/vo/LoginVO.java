@@ -4,10 +4,14 @@ public class LoginVO {
 	private String custId;
 	private String custPw;
 	private String custName;
+	private double wallet;
+
+	
 
 	@Override
 	public String toString() {
-		return "LoginVO [custId=" + custId + ", custPw=" + custPw + ", custName=" + custName + "]";
+		return "LoginVO [custId=" + custId + ", custPw=" + custPw + ", custName=" + custName + ", wallet=" + wallet
+				+ "]";
 	}
 
 	public LoginVO() {
@@ -24,6 +28,23 @@ public class LoginVO {
 		this.custId = custId;
 		this.custPw = custPw;
 		this.custName = custName;
+	}
+
+	
+	public LoginVO(String custId, String custPw, String custName, double wallet) {
+		super();
+		this.custId = custId;
+		this.custPw = custPw;
+		this.custName = custName;
+		this.wallet = wallet;
+	}
+
+	public double getWallet() {
+		return wallet;
+	}
+
+	public void setWallet(double wallet) {
+		this.wallet = wallet;
 	}
 
 	public String getCustName() {

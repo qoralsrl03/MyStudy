@@ -22,16 +22,15 @@ public class StockMain {
 		rstock.start();
 		@SuppressWarnings("resource")
 		Scanner scan = new Scanner(System.in);
-
 		System.out.println("당신의 최애 기업에게 투자하세요!");
 		System.out.println("	-민기 주식-");
 		System.out.println("");
-		System.out.println("Press Enter");
+		System.out.println("Press Enter Any Key");
 		scan.nextLine();
 
 		outer: while (true) {
 			System.out.println("--메뉴를 선택해 주세요--");
-			System.out.println("1 : 로그인 | 2 : 회원가입 | 3 : 종료");
+			System.out.println("1 : 로그인 | 2 : 회원가입 | 3 : 종료 | 4. 회원탈퇴");
 			System.out.print(">>> ");
 			int select;
 			try {
@@ -53,15 +52,74 @@ public class StockMain {
 							System.err.println("허용되지 않은 입력값입니다.");
 						}
 						if (select == 1) {
-							// TODO 주식조회 기능
+							// 주식조회 기능
+
 							ArrayList<CurrentStockVO> current = rstock.getCsv();
+							while (true) {
 
-							for (int i = 0; i < current.size(); i++) {
-								System.out.println("종목 : " + current.get(i).getStockname() + ", 현재가 : "
-										+ current.get(i).getClpr() + ", 최고가 : " + current.get(i).getHipr() + ", 최저가 : "
-										+ current.get(i).getLopr());
+								for (int i = 0; i < current.size(); i++) {
+									double cts = sservice.stockBoard().get(i).getClpr(); // 현재 가격
+									double cgs = current.get(i).getClpr(); // 바뀐 가격
+									String percentage = cts >= cgs
+											? String.format("-" + "%.02f%%", ((cts - cgs) / cts * 100))
+											: String.format("+" + "%.02f%%", (cgs - cts) / cts * 100);
+
+									if (current.get(i).getStockname().length() <= 2) {
+										System.out.println((i + 1) + ". 종목 : " + current.get(i).getStockname()
+												+ " 	\t| 현재가 : " + String.format("%.2f", current.get(i).getClpr())
+												+ "(" + percentage + ")" + " \t| 최고가 : "
+												+ String.format("%.2f", current.get(i).getHipr()) + " \t| 최저가 : "
+												+ String.format("%.2f", current.get(i).getLopr()));
+									} else if (current.get(i).getStockname().length() >= 6) {
+										System.out.println((i + 1) + ". 종목 : " + current.get(i).getStockname()
+												+ "\t| 현재가 : " + String.format("%.2f", current.get(i).getClpr()) + "("
+												+ percentage + ")" + " \t| 최고가 : "
+												+ String.format("%.2f", current.get(i).getHipr()) + " \t| 최저가 : "
+												+ String.format("%.2f", current.get(i).getLopr()));
+									} else {
+										System.out.println((i + 1) + ". 종목 : " + current.get(i).getStockname()
+												+ " \t| 현재가 : " + String.format("%.2f", current.get(i).getClpr()) + "("
+												+ percentage + ")" + " \t| 최고가 : "
+												+ String.format("%.2f", current.get(i).getHipr()) + " \t| 최저가 : "
+												+ String.format("%.2f", current.get(i).getLopr()));
+									}
+								}
+
+								System.out.println("---------------------------------");
+								System.out.println("1. 매수 | 2. 매도 | 3. 처음으로");
+								try {
+									select = Integer.parseInt(scan.nextLine());
+								} catch (Exception e) {
+									System.err.println("범위 이외의 값");
+								}
+								if (select == 1) {
+									System.out.println("어떤주식을 구매하시겠습니까?(번호 입력)");
+									try {
+										select = Integer.parseInt(scan.nextLine());
+										System.out.println(current.get(select - 1).getStockname() + "을 구매하시겠습니까?");
+										System.out.println("Y / N");
+										String answer = scan.nextLine();
+										if (answer.equalsIgnoreCase("Y")) {
+											System.out.println("몇 주를 구매 하시겠습니까?");
+											int choice = Integer.parseInt(scan.nextLine());
+											if (vo.getWallet() < (choice * current.get(select - 1).getClpr())) {
+												System.out.println("돈이 모자랍니다.");
+											} else {
+												System.out.println(choice + "주 구매하였습니다.");
+												vo.setWallet(
+														vo.getWallet() - (choice * current.get(select - 1).getClpr()));
+											}
+										}
+									} catch (Exception e) {
+										System.err.println("10 이하의 숫자를 입력해주세요");
+									}
+
+								} else if (select == 2) {
+									System.out.println("2번선택");
+								} else if (select == 3) {
+									break;
+								}
 							}
-
 						} else if (select == 2) {
 							// TODO 나의주식 조회 기능
 						} else if (select == 3) { // 로그아웃
@@ -76,7 +134,9 @@ public class StockMain {
 					continue outer;
 				} else if (select == 3) { // 종료
 					System.out.println("내일도 이용해주세요!");
-					break;
+					System.exit(0);
+				} else if (select == 4) {
+					lservice.deleteal();
 				} else { // 예외처리
 					System.out.println("잘못된 입력입니다!");
 				}

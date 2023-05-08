@@ -57,7 +57,7 @@ public class GetCoin2 extends Thread {
 					double[] lopr = new double[itemArray.size()];
 
 //					System.out.printf("%-15s %15s %15s %15s %n", "주식명", "현재가격", "최고가", "최저가");
-					for (int i = 15; i < 30; i++) {
+					for (int i = 8; i < 10; i++) {
 						JSONObject item = (JSONObject) itemArray.get(i); // 1행만 가져와서 item에 저장
 						itmsNm[i] = (String) item.get("itmsNm"); // item내의 itmsNm이라는 이름의 속성 값 호출
 						clpr[i] = Double.parseDouble((String) item.get("clpr"));
