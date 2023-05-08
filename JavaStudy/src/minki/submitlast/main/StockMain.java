@@ -9,6 +9,7 @@ import minki.submitlast.service.RunStock;
 import minki.submitlast.service.StockService;
 import minki.submitlast.vo.CurrentStockVO;
 import minki.submitlast.vo.LoginVO;
+import minki.submitlast.vo.MyStockVO;
 
 public class StockMain {
 
@@ -109,6 +110,9 @@ public class StockMain {
 									} else {
 										System.out.println(choice + "주 구매하였습니다.");
 										ArrayList<MyStockVO> ams = new ArrayList<>();
+										//이부분, 주식 구매시 나의 주식에 구매한 금액, 갯수, 그리고 보유하고 있던 금액에서 차감되도록
+										//보유 금액을 차라리 먼저 생성자에 넣고 구매금액하고 갯수를 전달해서 MyStock에서 빼는 방향으로 하자
+										ams.add(new MyStockVO());
 										vo.setWallet(vo.getWallet() - (choice * current.get(select - 1).getClpr()));
 									}
 
